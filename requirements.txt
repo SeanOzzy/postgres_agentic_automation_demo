@@ -1,0 +1,10 @@
+# Core AI / MCP
+anthropic>=0.40.0          # Anthropic Python SDK (Claude Haiku)
+mcp>=1.0.0                 # Model Context Protocol SDK (server + client)
+
+# PostgreSQL
+psycopg2-binary>=2.9.9     # PostgreSQL adapter (sync, zero-compile install)
+
+# Config & utilities
+pyyaml>=6.0.1              # YAML config parsing
+rich>=13.7.0               # Beautiful terminal output (tables, panels, progress)

@@ -1,0 +1,63 @@
+# =============================================================================
+# PostgreSQL Agentic Troubleshooting Demo — Configuration
+# =============================================================================
+# Copy this file to config.local.yaml and update credentials if needed.
+# config.local.yaml is .gitignored so secrets are never committed.
+# =============================================================================
+
+database:
+  host: localhost
+  port: 5432
+  user: postgres
+  password: ""            # Leave empty for peer auth / trust; or set password
+  dbname: postgres        # Target database (must have pgbench tables after setup)
+
+monitoring:
+  # How often the Python monitoring loop samples pg_stat_database (seconds)
+  check_interval_seconds: 5
+
+  # How many samples to collect before declaring a "normal" baseline.
+  # baseline_samples × check_interval_seconds = baseline window.
+  # e.g. 6 × 5s = 30 seconds of warm-up before alerting.
+  baseline_samples: 6
+
+  # Alert when current TPS drops below (baseline_tps × tps_drop_threshold).
+  # 0.5 means "alert if TPS falls to less than 50 % of baseline".
+  tps_drop_threshold: 0.5
+
+  # After an investigation completes, wait this long before triggering
+  # another one for the same symptom (prevents alert storms).
+  investigation_cooldown_seconds: 60
+
+agent:
+  # Haiku is used to keep costs low; swap for Sonnet/Opus for deeper reasoning.
+  model: "claude-haiku-4-5-20251001"
+
+  # Maximum tokens in the agent's response per turn.
+  max_tokens: 4096
+
+  # Maximum LLM ↔ tool call rounds per investigation session.
+  max_investigation_turns: 10
+
+  # Tools that MUST receive explicit human confirmation before execution.
+  # Add "terminate_backend" here if you want the nuclear option gated too.
+  requires_confirmation:
+    - cancel_backend
+
+workload:
+  # pgbench scale factor — 10 ≈ 1 GB of data, good for a laptop demo
+  scale_factor: 10
+
+  # Number of concurrent pgbench client connections
+  num_clients: 5
+
+  # Number of pgbench worker threads
+  num_threads: 2
+
+  # How long to run the workload before pgbench exits (seconds).
+  # Set to 0 for unlimited (Ctrl-C to stop).
+  duration_seconds: 300
+
+  # pgbench progress reporting interval (seconds).
+  # This drives the TPS output the monitoring loop reads.
+  progress_interval_seconds: 5

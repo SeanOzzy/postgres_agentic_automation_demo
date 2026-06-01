@@ -109,7 +109,7 @@ export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 ```bash
 # Clone the repo
 git clone https://github.com/your-username/postgres_agenticai_demo.git
-cd postgres_agenticai_demo
+cd postgres_agentic_automation_demo
 
 # Create and activate a virtual environment
 python -m venv .venv
@@ -119,7 +119,7 @@ source .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 
 # Set your Anthropic API key
-export ANTHROPIC_API_KEY=sk-ant-...
+export ANTHROPIC_API_KEY=sk-abc-...
 ```
 
 ---
@@ -256,7 +256,7 @@ Investigation complete.
 ## Project Structure
 
 ```
-postgres_agenticai_demo/
+postgres_agentic_automation_demo/
 │
 ├── main.py                          # CLI entry point (setup/workload/blocker/agent/demo)
 ├── config.yaml                      # Default configuration
